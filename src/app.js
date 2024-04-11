@@ -1,5 +1,6 @@
 const express = require('express');
 const userControler = require('./controlers/userControler');
+const validateMiddleware = require('./middlewares/ValidateTokenMiddleware');
 
 // ...
 
@@ -13,6 +14,7 @@ app.get('/', (_request, response) => {
 
 app.post('/login', userControler.login);
 app.post('/user', userControler.newUser);
+app.get('/user', validateMiddleware.validateToken, userControler.getAllUsers);
 
 // ...
 

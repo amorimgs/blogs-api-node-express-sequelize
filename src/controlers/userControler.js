@@ -10,4 +10,9 @@ const newUser = async (req, res) => {
   return res.status(result.status).json(result.message);
 };
 
-module.exports = { login, newUser };
+const getAllUsers = async (req, res) => {
+  const result = await userServices.getAllUsers();
+  res.status(result.status).json(result.message);
+};
+
+module.exports = { login, newUser, getAllUsers };

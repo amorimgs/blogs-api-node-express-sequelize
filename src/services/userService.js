@@ -50,4 +50,9 @@ const newUser = async (body) => {
   return { status: 201, message: { token } };
 };
 
-module.exports = { login, newUser };
+const getAllUsers = async () => {
+  const users = await User.findAll({ attributes: { exclude: ['password'] } });
+  return { status: 200, message: users };
+};
+
+module.exports = { login, newUser, getAllUsers };
