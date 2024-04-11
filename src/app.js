@@ -15,6 +15,7 @@ app.get('/', (_request, response) => {
 app.post('/login', userControler.login);
 app.post('/user', userControler.newUser);
 app.get('/user', validateMiddleware.validateToken, userControler.getAllUsers);
+app.get('/user/:id', validateMiddleware.validateToken, userControler.getUserById);
 
 // ...
 
