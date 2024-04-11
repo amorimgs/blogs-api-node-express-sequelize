@@ -12,7 +12,7 @@ app.get('/', (_request, response) => {
 });
 
 app.post('/login', userControler.login);
-app.post('/users', userControler.newUser);
+app.post('/user', userControler.newUser);
 
 // ...
 
