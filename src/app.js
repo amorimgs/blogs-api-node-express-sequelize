@@ -21,6 +21,7 @@ app.get('/user/:id', validateMiddleware.validateToken, userControler.getUserById
 
 // Category Route
 app.post('/categories', validateMiddleware.validateToken, categoryControler.newCategory);
+app.get('/categories', validateMiddleware.validateToken, categoryControler.getAllCategories);
 
 // ...
 
