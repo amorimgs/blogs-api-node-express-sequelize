@@ -6,4 +6,8 @@ const newPost = async (req, res) => {
   return res.status(result.status).json(result.message);
 };
 
-module.exports = { newPost };
+const getAllPosts = async (req, res) => {
+  const result = await postService.getAllPosts();
+  return res.status(result.status).json(result.message);
+};
+module.exports = { newPost, getAllPosts };

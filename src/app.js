@@ -32,6 +32,8 @@ app.post(
   validateInputsNewPost.newPost,
   postControler.newPost,
 );
+
+app.get('/post', validateMiddleware.validateToken, postControler.getAllPosts);
 // ...
 
 // É importante exportar a constante `app`,
