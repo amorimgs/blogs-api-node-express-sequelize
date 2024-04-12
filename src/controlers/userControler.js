@@ -12,14 +12,19 @@ const newUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   const result = await userServices.getAllUsers();
-  res.status(result.status).json(result.message);
+  return res.status(result.status).json(result.message);
 };
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
   const result = await userServices.getUserById(id);
-  res.status(result.status).json(result.message);
-  return result; 
+  return res.status(result.status).json(result.message); 
 };
 
-module.exports = { login, newUser, getAllUsers, getUserById };
+const deleteUser = async (req, res) => {
+  const { id } = req.user.payload;
+  const result = await userServices.deleteUser(id);
+  return res.status(result.status).end();
+};
+
+module.exports = { login, newUser, getAllUsers, getUserById, deleteUser };

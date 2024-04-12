@@ -20,6 +20,7 @@ app.post('/login', userControler.login);
 app.post('/user', userControler.newUser);
 app.get('/user', validateMiddleware.validateToken, userControler.getAllUsers);
 app.get('/user/:id', validateMiddleware.validateToken, userControler.getUserById);
+app.delete('/user/me', validateMiddleware.validateToken, userControler.deleteUser);
 
 // Category Route
 app.post('/categories', validateMiddleware.validateToken, categoryControler.newCategory);

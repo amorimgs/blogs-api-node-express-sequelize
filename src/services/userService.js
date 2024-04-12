@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, BlogPost, PostCategory, sequelize } = require('../models');
 const helpFunctions = require('./helpFunctions/helpFunctions');
 
 const login = async (body) => {
@@ -39,4 +39,22 @@ const getUserById = async (id) => {
   return { status: 200, message: user };
 };
 
-module.exports = { login, newUser, getAllUsers, getUserById };
+const deleteUser = async (id) => {
+  try {
+    await sequelize.transaction(async (t) => {
+      const postsIds = await BlogPost.findAll({ where: { userId: id } }, { attributes: ['id'] });
+      if (postsIds) {
+        await Promise.all(postsIds.map(async (postId) => {
+          await PostCategory.destroy({ where: { postId: postId.id } }, { transaction: t });
+        }));
+      }
+      await BlogPost.destroy({ where: { userId: id } }, { transaction: t });
+      await User.destroy({ where: { id } });
+    });
+    return { status: 204 };
+  } catch (error) {
+    return { status: 500, message: { message: 'Internal server error' } };
+  }
+};
+
+module.exports = { login, newUser, getAllUsers, getUserById, deleteUser };
