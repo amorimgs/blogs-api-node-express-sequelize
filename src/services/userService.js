@@ -1,5 +1,5 @@
 const { User, BlogPost, PostCategory, sequelize } = require('../models');
-const helpFunctions = require('./helpFunctions/helpFunctions');
+const helpFunctions = require('./helpers/helpFunctions');
 
 const login = async (body) => {
   if (!body.email || !body.password) {

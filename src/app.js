@@ -34,6 +34,7 @@ app.post(
   postControler.newPost,
 );
 app.get('/post', validateMiddleware.validateToken, postControler.getAllPosts);
+app.get('/post/search', validateMiddleware.validateToken, postControler.searchPost);
 app.get('/post/:id', validateMiddleware.validateToken, postControler.getPostById);
 app.put('/post/:id', validateMiddleware.validateToken, verifyUser.verify, postControler.updatePost);
 app.delete(

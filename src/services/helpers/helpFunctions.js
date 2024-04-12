@@ -5,6 +5,7 @@ const tokenGenerate = (payload) => {
   const token = jwt.sign({ payload }, secret);
   return token;
 };
+
 const validateInputsNewUser = (data) => {
   const { displayName, email, password } = data;
   if (displayName.length < 8) { 
