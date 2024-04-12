@@ -1,5 +1,17 @@
 const { BlogPost, PostCategory, User, Category, sequelize } = require('../models');
 
+const configFind = {
+  include: [{
+    model: User,
+    as: 'user',
+    attributes: { exclude: ['password'] },
+  },
+  { model: Category,
+    as: 'categories',
+    through: { attributes: [] },
+  }],
+};
+
 const newPost = async (body) => {
   try {
     const result = await sequelize.transaction(async (t) => {
@@ -20,34 +32,14 @@ const newPost = async (body) => {
 };
 
 const getAllPosts = async () => {
-  const posts = await BlogPost.findAll({
-    include: [{
-      model: User,
-      as: 'user',
-      attributes: { exclude: ['password'] },
-    },
-    { model: Category,
-      as: 'categories',
-      through: { attributes: [] },
-    }],
-  });
+  const posts = await BlogPost.findAll(configFind);
   return { status: 200, message: posts };
 };
 
 const getPostById = async (id) => {
   const verify = await BlogPost.findByPk(id);
   if (!verify) return { status: 404, message: { message: 'Post does not exist' } };
-  const post = await BlogPost.findByPk(id, {
-    include: [{
-      model: User,
-      as: 'user',
-      attributes: { exclude: ['password'] },
-    },
-    { model: Category,
-      as: 'categories',
-      through: { attributes: [] },
-    }],
-  });
+  const post = await BlogPost.findByPk(id, configFind);
   return { status: 200, message: post };
 };
 
@@ -56,18 +48,8 @@ const updatePost = async (id, body) => {
     return { status: 400, message: { message: 'Some required fields are missing' } };
   }
   await BlogPost.update(body, { where: { id } });
-  const post = await BlogPost.findByPk(id, {
-    include: [{
-      model: User,
-      as: 'user',
-      attributes: { exclude: ['password'] },
-    },
-    { model: Category,
-      as: 'categories',
-      through: { attributes: [] },
-    }],
-  });
-  return { status: 200, message:  post };
+  const post = await BlogPost.findByPk(id, configFind);
+  return { status: 200, message: post };
 };
 
 module.exports = { newPost, getAllPosts, getPostById, updatePost };
