@@ -35,6 +35,12 @@ app.post(
 app.get('/post', validateMiddleware.validateToken, postControler.getAllPosts);
 app.get('/post/:id', validateMiddleware.validateToken, postControler.getPostById);
 app.put('/post/:id', validateMiddleware.validateToken, verifyUser.verify, postControler.updatePost);
+app.delete(
+  '/post/:id',
+  validateMiddleware.validateToken,
+  verifyUser.verify,
+  postControler.deletePost,
+);
 // ...
 
 // É importante exportar a constante `app`,

@@ -52,4 +52,9 @@ const updatePost = async (id, body) => {
   return { status: 200, message: post };
 };
 
-module.exports = { newPost, getAllPosts, getPostById, updatePost };
+const deletePost = async (id) => {
+  await PostCategory.destroy({ where: { postId: id } });
+  await BlogPost.destroy({ where: { id } });
+  return { status: 204 };
+};
+module.exports = { newPost, getAllPosts, getPostById, updatePost, deletePost };
