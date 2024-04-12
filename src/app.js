@@ -4,7 +4,7 @@ const categoryControler = require('./controlers/categoryControler');
 const postControler = require('./controlers/postControler');
 const validateMiddleware = require('./middlewares/ValidateTokenMiddleware');
 const validateInputsNewPost = require('./middlewares/ValidateInputsNewPost');
-
+const verifyUser = require('./middlewares/VerifyPostUser');
 // ...
 
 const app = express();
@@ -34,6 +34,7 @@ app.post(
 );
 app.get('/post', validateMiddleware.validateToken, postControler.getAllPosts);
 app.get('/post/:id', validateMiddleware.validateToken, postControler.getPostById);
+app.put('/post/:id', validateMiddleware.validateToken, verifyUser.verify, postControler.updatePost);
 // ...
 
 // É importante exportar a constante `app`,

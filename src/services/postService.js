@@ -15,7 +15,6 @@ const newPost = async (body) => {
     });
     return { status: 201, message: result };
   } catch (err) {
-    console.log(err.message);
     return { status: 400, message: { message: 'one or more "categoryIds" not found' } };
   }
 };
@@ -52,4 +51,23 @@ const getPostById = async (id) => {
   return { status: 200, message: post };
 };
 
-module.exports = { newPost, getAllPosts, getPostById };
+const updatePost = async (id, body) => {
+  if (!body.title || !body.content) {
+    return { status: 400, message: { message: 'Some required fields are missing' } };
+  }
+  await BlogPost.update(body, { where: { id } });
+  const post = await BlogPost.findByPk(id, {
+    include: [{
+      model: User,
+      as: 'user',
+      attributes: { exclude: ['password'] },
+    },
+    { model: Category,
+      as: 'categories',
+      through: { attributes: [] },
+    }],
+  });
+  return { status: 200, message:  post };
+};
+
+module.exports = { newPost, getAllPosts, getPostById, updatePost };
