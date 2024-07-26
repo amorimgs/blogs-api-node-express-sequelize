@@ -36,8 +36,6 @@ Neste projeto desenvolvi uma API e um banco de dados para a produção de conte�
   - **:warning: Atenção:** Caso opte por utilizar o Docker, **TODOS** os comandos disponíveis no `package.json` (npm start, npm test, npm run dev, ...) devem ser executados **DENTRO** do container, ou seja, no terminal que aparece após a execução do comando `docker exec` citado acima. 
 
 
-  ![sequelize test](./public/remote-container.png)
-
   <br />
   
   ## 👉 Sem Docker
